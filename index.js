@@ -54,6 +54,12 @@ app.get('/users', async (req, res) => {
     }
 });
 
+app.post('/users', async (req, res) => {
+    const newUser = req.body;
+    const result = await users.insertOne(newUser);
+    res.send(result);
+});
+
 app.listen(port, () => {
     console.log(`Simple crud server running on port ${port}...`);
 });
