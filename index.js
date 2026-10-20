@@ -87,6 +87,13 @@ app.post("/users", async (req, res) => {
   res.send(result);
 });
 
+app.delete("/users/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)};
+  const result = await users.deleteOne(query);
+  res.send(result);
+});
+
 app.listen(port, () => {
   console.log(`Simple crud server running on port ${port}...`);
 });
