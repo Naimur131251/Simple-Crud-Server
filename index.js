@@ -87,9 +87,27 @@ app.post("/users", async (req, res) => {
   res.send(result);
 });
 
+app.patch("/users/:id", async (req, res) => {
+  const id = req.params.id;
+  const updateUser = req.body;
+
+  const filter = {
+    _id: new ObjectId(id),
+  };
+  const option = { upsert: true };
+  const updateDoc = {
+    $set: {
+      name: updateUser.name,
+      email: updateUser.email,
+    },
+  };
+  const result = await users.updateOne(filter, updateDoc, option);
+  res.send(result);
+});
+
 app.delete("/users/:id", async (req, res) => {
   const id = req.params.id;
-  const query = {_id: new ObjectId(id)};
+  const query = { _id: new ObjectId(id) };
   const result = await users.deleteOne(query);
   res.send(result);
 });
